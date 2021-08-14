@@ -24,6 +24,7 @@ export default class search extends Component {
                 results : [],
                 not_found:false,
                 searching:false,
+                query:e.target.value,
             })
 
             return
@@ -84,7 +85,7 @@ export default class search extends Component {
                   
                     {
 
-                        this.state.results.length !== 0 ? (
+                        this.state.results.length !== 0 && this.state.query !== '' ? (
 
                             <div className="bookshelf">
                                     <div className="bookshelf-books">
@@ -130,7 +131,7 @@ export default class search extends Component {
 
                         ) : (
 
-                            this.state.searching ? <h3>Searching...</h3> : this.state.not_found ? <h3>No Result</h3> : <h3>Search Books</h3>
+                            this.state.searching ? <h3>Searching...</h3> : this.state.query==='' ? <h3>Search Books</h3> : this.state.not_found ? <h3>No Result</h3> : <h3>Search Books</h3>
 
                         )
                         
