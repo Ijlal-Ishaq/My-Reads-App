@@ -27,7 +27,10 @@ class BooksApp extends React.Component {
         if(e.target.value==='currentlyReading'){
 
 
-            
+
+            // checking if the currently reading is present in local storage if not then creating it otherwise 
+            // checking if the book is alreading present in "currently reading" if not then adding it.
+            // then checking other two sections "want to read" and "read" if they have the book then removing it from their.
             if(window.localStorage.getItem('currently_reading')===null){
               
                 let currently_reading=[book];
@@ -243,6 +246,66 @@ class BooksApp extends React.Component {
 
             }
 
+        }else if(e.target.value==='none'){
+
+
+            let read=JSON.parse(window.localStorage.getItem('read'));
+            let want_to_read=JSON.parse(window.localStorage.getItem('want_to_read'));
+            let currently_reading=JSON.parse(window.localStorage.getItem('currently_reading'));
+
+            //searching the book in "want to read" and removing it...
+            if(want_to_read!==null){
+              
+                want_to_read.forEach((element,i) => {
+                    
+                    if(element.id===book.id){
+
+                        want_to_read.splice(i,1);
+                        window.localStorage.setItem('want_to_read',JSON.stringify(want_to_read));
+
+                    }
+
+                });
+              
+              
+            }
+
+            //searching the book in "currently reading" and removing it...
+            if(currently_reading!==null){
+
+                currently_reading.forEach((element,i) => {
+                    
+                    if(element.id===book.id){
+
+                        currently_reading.splice(i,1);
+                        window.localStorage.setItem('currently_reading',JSON.stringify(currently_reading));
+
+                    }
+
+                });
+
+            }
+
+            //searching the book in "read" and removing it...
+            if(read!==null){
+
+                read.forEach((element,i) => {
+                    
+                    if(element.id===book.id){
+
+                        read.splice(i,1);
+                        window.localStorage.setItem('read',JSON.stringify(read));
+
+                    }
+
+                });
+
+
+            }
+
+            alert('Book has been removed Successfully.')
+
+
         }
 
         this.setState({
@@ -270,12 +333,10 @@ class BooksApp extends React.Component {
       <div className="App">
       
       <BrowserRouter>
-      
-      <Route exact path='/' render={()=> <Home books={this.state} move_to={this.move_to} get_thumbnail={this.get_thumbnail} />} ></Route>
-      <Route path='/search' render={()=> <Search books={this.state} move_to={this.move_to} get_thumbnail={this.get_thumbnail} />}></Route>
+        
+        <Route exact path='/' render={()=> <Home books={this.state} move_to={this.move_to} get_thumbnail={this.get_thumbnail} />} ></Route>
+        <Route path='/search' render={()=> <Search books={this.state} move_to={this.move_to} get_thumbnail={this.get_thumbnail} />}></Route>
      
-      
-      
       </BrowserRouter>
   
   
